@@ -1,4 +1,4 @@
-from constraints import *
+from constants import *
 
 class Move:
     def __init__(self, from_row, from_col, to_row, to_col, promotion=None, is_castling=False, is_en_passant=False):

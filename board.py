@@ -1,4 +1,4 @@
-from constraints import *
+from constants import *
 from move import Move
 
 class Board:
@@ -396,6 +396,15 @@ class Board:
                 elif move.from_row == 7 and move.from_col == 7:
                     self.castling_rights["k"] = False
 
+        # A rook captured on its home square removes that castling right
+        corner_rights = {
+            (0, 0): "Q", (0, 7): "K",
+            (7, 0): "q", (7, 7): "k",
+        }
+        right = corner_rights.get((move.to_row, move.to_col))
+        if right:
+            self.castling_rights[right] = False
+
         # Update halfmove clock
         if piece_type == PAWN or undo_info["captured_piece"] != EMPTY:
             self.halfmove_clock = 0
@@ -580,6 +589,5 @@ class Board:
                 board_string += piece_symbols.get(piece, "?") + " "
             board_string += f"|{row + 1}\n"
         board_string += "  ---------------\n"
-        board_string = "\n  a b c d e f g h\n"
 
         return board_string
