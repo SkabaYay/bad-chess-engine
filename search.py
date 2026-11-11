@@ -238,7 +238,9 @@ class SearchEngine:
         if len(moves) == 0:
             return None, 0
 
-        maximizing = self.board.to_move == WHITE
+        # Flipping the root would make black select the highest score, instead of the lowest score. Black here is maximising.
+        # This simple change makes the chess engine as dumb as me
+        maximizing = self.board.to_move == BLACK
         best_move = None
         best_eval = float("-inf") if maximizing else float("inf")
         alpha, beta = float("-inf"), float("inf")
